@@ -53,6 +53,8 @@ def main() -> None:
     output_dir = Path(cfg["paths"]["output_dir"]).resolve()
     output_dir.mkdir(parents=True, exist_ok=True)
 
+    print("\n训练中，每轮会显示一个进度条，请稍候...\n")
+
     model = YOLO(train_cfg["model"])
     model.train(
         data=str(data_yaml),
@@ -62,7 +64,16 @@ def main() -> None:
         device=train_cfg["device"],
         project=str(output_dir),
         name="pig_yolov8n",
+        verbose=False,
     )
+
+    print("\n" + "=" * 50)
+    print("训练完成")
+    print("=" * 50)
+    print(f"模型权重保存位置：{output_dir / 'pig_yolov8n' / 'weights'}")
+    print(f"  - best.pt：验证集上表现最好的模型")
+    print(f"  - last.pt：最后一轮的模型")
+    print("=" * 50)
 
 
 if __name__ == "__main__":
