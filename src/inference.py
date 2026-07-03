@@ -118,9 +118,13 @@ def _draw_annotations(
         draw.rectangle([x1, y1 - 26, x1 + 120, y1], fill=(0, 255, 0))
         draw.text((x1 + 4, y1 - 24), label, fill=(0, 0, 0), font=font_small)
 
+    title_text = "猪只检测结果 (Pig Detection)"
+    draw.rectangle([10, 10, 10 + 260, 10 + 30], fill=(0, 0, 0, 128))
+    draw.text((16, 14), title_text, fill=(255, 255, 255), font=font_small)
+
     risk_color = {"normal": (0, 255, 0), "medium": (255, 165, 0), "high": (255, 0, 0)}.get(risk_level, (255, 255, 255))
     risk_text = f"风险等级: {risk_level} | {risk_reason}"
-    draw.rectangle([10, 10, 10 + 320, 10 + 30], fill=(0, 0, 0, 128))
-    draw.text((16, 14), risk_text, fill=risk_color, font=font)
+    draw.rectangle([10, 45, 10 + 360, 45 + 26], fill=(0, 0, 0, 128))
+    draw.text((16, 49), risk_text, fill=risk_color, font=font_small)
 
     return pil_image
