@@ -38,7 +38,7 @@ JSON 标注格式示例：
 {
   "shape": [
     {
-      "label": "pig",
+      "label": "猪",
       "boxes": [x1, y1, x2, y2],
       "points": null
     }
@@ -95,19 +95,19 @@ python scripts/train_yolo.py --config configs/default.yaml --epochs 5
 ### 5. 模型评估
 
 ```bash
-python scripts/evaluate_yolo.py --weights outputs/runs/pig_yolov8n/weights/best.pt
+python scripts/evaluate_yolo.py --weights outputs/pig_yolov8n/weights/best.pt
 ```
 
 ### 6. 单图推理
 
 ```bash
-python scripts/predict_image.py --weights outputs/runs/pig_yolov8n/weights/best.pt --image D:/下载/pig/test/某张图片.jpg
+python scripts/predict_image.py --weights outputs/pig_yolov8n/weights/best.pt --image D:/下载/pig/test/某张图片.jpg
 ```
 
 ### 7. 批量分析
 
 ```bash
-python scripts/analyze_batch.py --weights outputs/runs/pig_yolov8n/weights/best.pt --image-dir D:/下载/pig/test
+python scripts/analyze_batch.py --weights outputs/pig_yolov8n/weights/best.pt --image-dir D:/下载/pig/test
 ```
 
 ### 8. Gradio 演示

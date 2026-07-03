@@ -11,7 +11,7 @@ from PIL import Image
 from src.inference import load_yolo_model, run_inference
 from src.utils import load_config
 
-DEFAULT_WEIGHTS = "outputs/runs/pig_yolov8n/weights/best.pt"
+DEFAULT_WEIGHTS = "outputs/pig_yolov8n/weights/best.pt"
 
 
 def predict_image(
