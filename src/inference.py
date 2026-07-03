@@ -6,7 +6,7 @@ from typing import Any
 
 import cv2
 import numpy as np
-from PIL import Image
+from PIL import Image, ImageDraw, ImageFont
 
 from src.analytics import calculate_bbox_area_ratio, classify_risk
 from src.utils import load_config
@@ -44,8 +44,7 @@ def run_inference(
 
     detections: list[dict[str, Any]] = []
     confidences: list[float] = []
-    annotated_image = result.plot()
-    annotated_pil = Image.fromarray(annotated_image)
+    annotated_pil = pil_image.copy()
 
     if result.boxes is None or len(result.boxes) == 0:
         return {
@@ -84,6 +83,8 @@ def run_inference(
     cfg = load_config()
     risk_level, risk_reason = classify_risk(pig_count, bbox_area_ratio, mean_confidence, cfg.get("risk", {}))
 
+    annotated_pil = _draw_annotations(pil_image, detections, risk_level, risk_reason)
+
     return {
         "pig_count": pig_count,
         "mean_confidence": mean_confidence,
@@ -93,3 +94,33 @@ def run_inference(
         "detections": detections,
         "annotated_image": annotated_pil,
     }
+
+
+def _draw_annotations(
+    pil_image: Image.Image,
+    detections: list[dict[str, Any]],
+    risk_level: str,
+    risk_reason: str,
+) -> Image.Image:
+    draw = ImageDraw.Draw(pil_image)
+    font_path = Path("C:/Windows/Fonts/simhei.ttf")
+    try:
+        font = ImageFont.truetype(str(font_path), 20)
+        font_small = ImageFont.truetype(str(font_path), 16)
+    except Exception:
+        font = ImageFont.load_default()
+        font_small = ImageFont.load_default()
+
+    for det in detections:
+        x1, y1, x2, y2 = det["x1"], det["y1"], det["x2"], det["y2"]
+        label = f"pig {det['confidence']:.2f}"
+        draw.rectangle([x1, y1, x2, y2], outline=(0, 255, 0), width=2)
+        draw.rectangle([x1, y1 - 26, x1 + 120, y1], fill=(0, 255, 0))
+        draw.text((x1 + 4, y1 - 24), label, fill=(0, 0, 0), font=font_small)
+
+    risk_color = {"normal": (0, 255, 0), "medium": (255, 165, 0), "high": (255, 0, 0)}.get(risk_level, (255, 255, 255))
+    risk_text = f"风险等级: {risk_level} | {risk_reason}"
+    draw.rectangle([10, 10, 10 + 320, 10 + 30], fill=(0, 0, 0, 128))
+    draw.text((16, 14), risk_text, fill=risk_color, font=font)
+
+    return pil_image

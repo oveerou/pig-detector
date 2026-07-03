@@ -62,19 +62,7 @@
             "cwd": "${workspaceFolder}",
             "justMyCode": false
         },
-        {
-            "name": "猪只：单图推理",
-            "type": "debugpy",
-            "request": "launch",
-            "module": "scripts.predict_image",
-            "args": [
-                "--weights", "outputs/pig_yolov8n/weights/best.pt",
-                "--image", "D:/下载/pig/test/20190515142012.jpg"
-            ],
-            "console": "integratedTerminal",
-            "cwd": "${workspaceFolder}",
-            "justMyCode": false
-        },
+
         {
             "name": "猪只：批量分析",
             "type": "debugpy",
