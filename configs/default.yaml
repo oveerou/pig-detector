@@ -1,7 +1,7 @@
 project:
   name: pig-detector
   class_names:
-    - pig
+    - 猪
 
 paths:
   raw_root: D:/下载/pig
