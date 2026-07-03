@@ -38,7 +38,7 @@ JSON 标注格式示例：
 {
   "shape": [
     {
-      "label": "猪",
+      "label": "pig",
       "boxes": [x1, y1, x2, y2],
       "points": null
     }

@@ -67,7 +67,7 @@ def run_inference(
         confidences.append(float(score))
         area_ratio = max(0.0, (x2 - x1) * (y2 - y1)) / (width * height)
         detections.append({
-            "class_name": "猪",
+            "class_name": "pig",
             "confidence": float(score),
             "x1": float(x1),
             "y1": float(y1),
@@ -113,7 +113,7 @@ def _draw_annotations(
 
     for det in detections:
         x1, y1, x2, y2 = det["x1"], det["y1"], det["x2"], det["y2"]
-        label = f"猪 {det['confidence']:.2f}"
+        label = f"pig {det['confidence']:.2f}"
         draw.rectangle([x1, y1, x2, y2], outline=(0, 255, 0), width=2)
         draw.rectangle([x1, y1 - 26, x1 + 120, y1], fill=(0, 255, 0))
         draw.text((x1 + 4, y1 - 24), label, fill=(0, 0, 0), font=font_small)
