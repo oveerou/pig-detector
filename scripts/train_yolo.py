@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import argparse
+import csv
 import sys
 from pathlib import Path
 
@@ -75,14 +76,27 @@ def main() -> None:
     print("  - last.pt：最后一轮的模型")
     print("=" * 50)
 
-    print("\n关键指标：")
-    print("  P (Precision) = 精确率，越高越好")
-    print("  R (Recall)    = 召回率，越高越好")
-    print("  mAP50        = IoU≥0.5 的平均精度，越接近 1 越好")
-    print("  mAP50-95     = 更严格的精度，越接近 1 越好")
-    print("  box_loss     = 边框损失，越小越好")
-    print("  cls_loss     = 分类损失，越小越好")
-    print("  dfl_loss     = 分布焦点损失，越小越好")
+    results_files = sorted(output_dir.glob("pig_yolov8n*/results.csv"), key=lambda p: p.stat().st_mtime)
+    if results_files:
+        with open(results_files[-1], newline="", encoding="utf-8") as f:
+            rows = list(csv.DictReader(f))
+        if rows:
+            last = rows[-1]
+            precision = float(last["metrics/precision(B)"])
+            recall = float(last["metrics/recall(B)"])
+            map50 = float(last["metrics/mAP50(B)"])
+            map95 = float(last["metrics/mAP50-95(B)"])
+            box_loss = float(last["train/box_loss"])
+            cls_loss = float(last["train/cls_loss"])
+            dfl_loss = float(last["train/dfl_loss"])
+            print("\n最终指标：")
+            print(f"  P        = {precision:.3f}")
+            print(f"  R        = {recall:.3f}")
+            print(f"  mAP50    = {map50:.3f}")
+            print(f"  mAP50-95 = {map95:.3f}")
+            print(f"  box_loss = {box_loss:.3f}")
+            print(f"  cls_loss = {cls_loss:.3f}")
+            print(f"  dfl_loss = {dfl_loss:.3f}")
     print("=" * 50)
 
 
