@@ -1,0 +1,60 @@
+"""Train YOLOv8n on the pig detection dataset."""
+from __future__ import annotations
+
+import argparse
+import sys
+from pathlib import Path
+
+project_root = Path(__file__).resolve().parent.parent
+sys.path.insert(0, str(project_root))
+
+from src.utils import load_config
+
+
+def main() -> None:
+    parser = argparse.ArgumentParser(description="Train YOLOv8n for pig detection")
+    parser.add_argument("--config", default="configs/default.yaml", help="Path to config YAML")
+    parser.add_argument("--epochs", type=int, default=None, help="Override epochs")
+    args = parser.parse_args()
+
+    cfg = load_config(args.config)
+    train_cfg = cfg["train"]
+    data_yaml = Path(cfg["paths"]["yolo_root"]) / "data.yaml"
+
+    if not data_yaml.exists():
+        print(f"data.yaml not found: {data_yaml}")
+        print("Please run `python scripts/convert_json_to_yolo.py --config configs/default.yaml` first.")
+        return
+
+    epochs = args.epochs if args.epochs is not None else train_cfg["epochs"]
+
+    print("=" * 50)
+    print("开始训练 YOLOv8n 猪只检测模型")
+    print("=" * 50)
+    print(f"模型：{train_cfg['model']}")
+    print(f"轮数：{epochs}")
+    print(f"图片尺寸：{train_cfg['imgsz']}")
+    print(f"批次大小：{train_cfg['batch']}")
+    print(f"设备：{train_cfg['device']}")
+    print("=" * 50)
+
+    try:
+        from ultralytics import YOLO
+    except ImportError:
+        print("未安装 ultralytics，请先运行：pip install -r requirements.txt")
+        return
+
+    model = YOLO(train_cfg["model"])
+    model.train(
+        data=str(data_yaml),
+        epochs=epochs,
+        imgsz=train_cfg["imgsz"],
+        batch=train_cfg["batch"],
+        device=train_cfg["device"],
+        project="outputs/runs",
+        name="pig_yolov8n",
+    )
+
+
+if __name__ == "__main__":
+    main()

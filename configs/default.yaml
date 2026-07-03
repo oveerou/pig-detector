@@ -1,0 +1,35 @@
+project:
+  name: pig-detector
+  class_names:
+    - pig
+
+paths:
+  raw_root: D:/下载/pig
+  raw_train_images: D:/下载/pig/train_img
+  raw_train_annotations: D:/下载/pig/train_json
+  raw_test_images: D:/下载/pig/test
+  yolo_root: data/pig_yolo
+  output_dir: outputs
+
+data:
+  train_ratio: 0.8
+  val_ratio: 0.2
+  seed: 42
+  image_extensions:
+    - .jpg
+    - .jpeg
+    - .png
+
+train:
+  model: yolov8n.pt
+  epochs: 50
+  imgsz: 640
+  batch: 8
+  device: auto
+
+risk:
+  medium_count_threshold: 8
+  high_count_threshold: 15
+  medium_area_ratio_threshold: 0.25
+  high_area_ratio_threshold: 0.45
+  low_confidence_threshold: 0.5
