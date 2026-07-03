@@ -4,10 +4,11 @@ project:
     - pig
 
 paths:
-  raw_root: D:/下载/pig
-  raw_train_images: D:/下载/pig/train_img
-  raw_train_annotations: D:/下载/pig/train_json
-  raw_test_images: D:/下载/pig/test
+  # 请替换为你的本地数据路径
+  raw_root: path/to/your/pig/data
+  raw_train_images: path/to/your/pig/data/train_img
+  raw_train_annotations: path/to/your/pig/data/train_json
+  raw_test_images: path/to/your/pig/data/test
   yolo_root: data/pig_yolo
   output_dir: outputs
 

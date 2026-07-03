@@ -17,3 +17,5 @@ runs/
 .DS_Store
 Thumbs.db
 .env
+.vscode/
+README_PREVIEW.html

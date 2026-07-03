@@ -34,16 +34,16 @@ def main() -> None:
     gpu_available = torch.cuda.is_available()
     gpu_name = torch.cuda.get_device_name(0) if gpu_available else "无"
 
-    print("=" * 50)
+    print("\n" )
     print("开始训练 YOLOv8n 猪只检测模型")
-    print("=" * 50)
+    print("\n" )
     print(f"模型 (Model)：{train_cfg['model']}")
     print(f"轮数 (Epochs)：{epochs}")
     print(f"图片尺寸 (Image size)：{train_cfg['imgsz']}")
     print(f"批次大小 (Batch)：{train_cfg['batch']}")
     print(f"设备 (Device)：{train_cfg['device']}")
     print(f"GPU 可用：{gpu_available} ({gpu_name})")
-    print("=" * 50)
+    print("\n")
 
     try:
         from ultralytics import YOLO
@@ -54,7 +54,7 @@ def main() -> None:
     output_dir = Path(cfg["paths"]["output_dir"]).resolve()
     output_dir.mkdir(parents=True, exist_ok=True)
 
-    print("\n训练中，每轮会显示一个进度条，请稍候...\n")
+    print("训练中，每轮会显示一个进度条，请稍候...\n")
 
     model = YOLO(train_cfg["model"])
     model.train(
@@ -68,13 +68,11 @@ def main() -> None:
         verbose=False,
     )
 
-    print("\n" + "=" * 50)
+    print("\n")
     print("训练完成")
-    print("=" * 50)
+    print("\n")
     print(f"模型权重保存位置：{output_dir / 'pig_yolov8n' / 'weights'}")
-    print("  - best.pt：验证集上表现最好的模型")
-    print("  - last.pt：最后一轮的模型")
-    print("=" * 50)
+
 
     results_files = sorted(output_dir.glob("pig_yolov8n*/results.csv"), key=lambda p: p.stat().st_mtime)
     if results_files:
@@ -90,15 +88,13 @@ def main() -> None:
             cls_loss = float(last["train/cls_loss"])
             dfl_loss = float(last["train/dfl_loss"])
             print("\n最终指标：")
-            print(f"  精确率 (Precision) = {precision:.3f}")
-            print(f"  召回率 (Recall)    = {recall:.3f}")
-            print(f"  mAP50             = {map50:.3f}")
-            print(f"  mAP50-95          = {map95:.3f}")
+            print(f"  精确率 (P) = {precision:.3f}")
+            print(f"  召回率 (R) = {recall:.3f}")
+            print(f"  mAP50      = {map50:.3f}")
+            print(f"  mAP50-95   = {map95:.3f}")
             print(f"  边框损失 (box_loss)= {box_loss:.3f}")
             print(f"  分类损失 (cls_loss)= {cls_loss:.3f}")
             print(f"  分布焦点损失 (dfl_loss)= {dfl_loss:.3f}")
-    print("=" * 50)
-
-
+            print("\n")
 if __name__ == "__main__":
     main()
