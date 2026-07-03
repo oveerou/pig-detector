@@ -50,6 +50,9 @@ def main() -> None:
         print("未安装 ultralytics，请先运行：pip install -r requirements.txt")
         return
 
+    output_dir = Path(cfg["paths"]["output_dir"]).resolve()
+    output_dir.mkdir(parents=True, exist_ok=True)
+
     model = YOLO(train_cfg["model"])
     model.train(
         data=str(data_yaml),
@@ -57,7 +60,7 @@ def main() -> None:
         imgsz=train_cfg["imgsz"],
         batch=train_cfg["batch"],
         device=train_cfg["device"],
-        project="outputs/runs",
+        project=str(output_dir),
         name="pig_yolov8n",
     )
 

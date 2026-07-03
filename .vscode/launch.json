@@ -56,7 +56,7 @@
             "request": "launch",
             "module": "scripts.evaluate_yolo",
             "args": [
-                "--weights", "outputs/runs/pig_yolov8n/weights/best.pt"
+                "--weights", "outputs/pig_yolov8n/weights/best.pt"
             ],
             "console": "integratedTerminal",
             "cwd": "${workspaceFolder}",
@@ -68,7 +68,7 @@
             "request": "launch",
             "module": "scripts.predict_image",
             "args": [
-                "--weights", "outputs/runs/pig_yolov8n/weights/best.pt",
+                "--weights", "outputs/pig_yolov8n/weights/best.pt",
                 "--image", "D:/下载/pig/test/20190515142012.jpg"
             ],
             "console": "integratedTerminal",
@@ -81,7 +81,7 @@
             "request": "launch",
             "module": "scripts.analyze_batch",
             "args": [
-                "--weights", "outputs/runs/pig_yolov8n/weights/best.pt",
+                "--weights", "outputs/pig_yolov8n/weights/best.pt",
                 "--image-dir", "D:/下载/pig/test"
             ],
             "console": "integratedTerminal",
