@@ -75,6 +75,21 @@ def main() -> None:
     print(f"  - last.pt：最后一轮的模型")
     print("=" * 50)
 
+    print("\n关键指标说明：")
+    print("  P (Precision)   = 精确率：检测到的猪只里真正是猪只的比例，越高越好")
+    print("  R (Recall)      = 召回率：所有猪只里被检测出来的比例，越高越好")
+    print("  mAP50           = 检测框与标注框重叠度 IoU≥0.5 的平均精度，越接近 1 越好")
+    print("  mAP50-95        = 更严格的精度指标（IoU 从 0.5 到 0.95），越接近 1 越好")
+    print("  box_loss        = 边框坐标损失，越小越好")
+    print("  cls_loss        = 类别分类损失，越小越好")
+    print("  dfl_loss        = 分布焦点损失，越小越好")
+    print("\n你现在可以：")
+    print("  1. 按 F5 选择「猪只：评估」查看验证集指标")
+    print("  2. 按 F5 选择「猪只：单图推理」测试单张图片")
+    print("  3. 按 F5 选择「猪只：批量分析」分析 test 目录")
+    print("  4. 按 F5 选择「猪只：Gradio 演示」启动网页界面")
+    print("=" * 50)
+
 
 if __name__ == "__main__":
     main()
