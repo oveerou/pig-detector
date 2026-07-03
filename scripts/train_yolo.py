@@ -28,6 +28,11 @@ def main() -> None:
 
     epochs = args.epochs if args.epochs is not None else train_cfg["epochs"]
 
+    import torch
+
+    gpu_available = torch.cuda.is_available()
+    gpu_name = torch.cuda.get_device_name(0) if gpu_available else "无"
+
     print("=" * 50)
     print("开始训练 YOLOv8n 猪只检测模型")
     print("=" * 50)
@@ -36,6 +41,7 @@ def main() -> None:
     print(f"图片尺寸 (Image size)：{train_cfg['imgsz']}")
     print(f"批次大小 (Batch)：{train_cfg['batch']}")
     print(f"设备 (Device)：{train_cfg['device']}")
+    print(f"GPU 可用：{gpu_available} ({gpu_name})")
     print("=" * 50)
 
     try:
