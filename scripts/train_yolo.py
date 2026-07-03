@@ -31,11 +31,11 @@ def main() -> None:
     print("=" * 50)
     print("开始训练 YOLOv8n 猪只检测模型")
     print("=" * 50)
-    print(f"模型：{train_cfg['model']}")
-    print(f"轮数：{epochs}")
-    print(f"图片尺寸：{train_cfg['imgsz']}")
-    print(f"批次大小：{train_cfg['batch']}")
-    print(f"设备：{train_cfg['device']}")
+    print(f"模型 (Model)：{train_cfg['model']}")
+    print(f"轮数 (Epochs)：{epochs}")
+    print(f"图片尺寸 (Image size)：{train_cfg['imgsz']}")
+    print(f"批次大小 (Batch)：{train_cfg['batch']}")
+    print(f"设备 (Device)：{train_cfg['device']}")
     print("=" * 50)
 
     try:
